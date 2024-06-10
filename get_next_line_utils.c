@@ -1,68 +1,88 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: imatek <imatek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 10:50:55 by imatek            #+#    #+#             */
-/*   Updated: 2024/06/06 15:07:47 by imatek           ###   ########.fr       */
+/*   Created: 2024/06/07 12:48:49 by imatek            #+#    #+#             */
+/*   Updated: 2024/06/10 10:48:13 by imatek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *s)
+size_t	ft_strlen(char *s)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
+	if (!s)
+		return (1);
 	while (s[i])
 		i++;
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strchr(char *str, int set)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == set)
+			return (&str[i]);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_strjoin_free(char *stash, char *buf)
 {
 	int		i;
 	int		j;
-	char	*result;
+	int		len;
+	char	*join;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	result = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1));
-	if (!result)
-		return (NULL);
-	while (s1[i])
+	len = ft_strlen(buf) + ft_strlen(stash);
+	if (!stash)
+		len = ft_strlen(buf);
+	join = ft_calloc(len + 1, sizeof(char));
+	while (stash && stash[++i])
 	{
-		result[j] = s1[i];
-		i++;
+		join[j] = stash[i];
 		j++;
 	}
-	i = 0;
-	while (s2[i])
+	i = -1;
+	while (buf[++i])
 	{
-		result[j] = s2[i];
-		i++;
+		join[j] = buf[i];
 		j++;
 	}
-	result[j] = '\0';
-	return (result);
+	join[j] = '\0';
+	free (stash);
+	return (join);
 }
 
-char	*ft_strdup(char *s, int n)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	int		i;
-	char	*dup;
+	char	*str;
+	size_t	sum;
+	size_t	i;
 
-	dup = malloc(sizeof(char) * (ft_strlen(s)+ 1));
-	if (!dup)
+	if (nmemb != 0 && nmemb * size / nmemb != size)
 		return (NULL);
-	while (s[i] && i <= n)
-	{
-		dup[i] = s[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
+	sum = nmemb * size;
+	str = malloc(sum);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < sum)
+		str[i++] = '\0';
+	return (str);
 }

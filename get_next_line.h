@@ -6,7 +6,7 @@
 /*   By: imatek <imatek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:51:01 by imatek            #+#    #+#             */
-/*   Updated: 2024/06/06 12:41:08 by imatek           ###   ########.fr       */
+/*   Updated: 2024/06/10 21:01:25 by imatek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,17 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-
-typedef struct s_list
-{
-	char			*buf;
-	struct s_list	*next;
-}					t_list;
+# include <stdint.h>
+# include <fcntl.h>
+# include <stdio.h>
 
 char	*get_next_line(int fd);
+size_t	ft_strlen(char *s);
+char	*ft_strchr(char *s, int c);
+char	*ft_strjoin_free(char *stash, char *buf);
+void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_read(int fd, char *stash);
+char	*ft_new(char *stash);
+char	*get_line(char *dest, char *stash);
 
 #endif
