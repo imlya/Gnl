@@ -30,13 +30,17 @@ char	*ft_read(int fd, char *stash)
 	return (stash);
 }
 
-char	*get_line(char *dest, char *stash)
+char	*get_line(char *stash)
 {
 	size_t	i;
+	char	*dest;
 
-	if (!stash && !dest)
+	if (!stash)
 		return (NULL);
-	dest = ft_calloc((ft_strlen(stash) + 1), sizeof(char));
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	dest = ft_calloc((i + 2), sizeof(char));
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 	{
@@ -49,28 +53,30 @@ char	*get_line(char *dest, char *stash)
 		i++;
 	}
 	dest[i] = '\0';
-	free (stash);
 	return (dest);
 }
 
 char	*ft_new(char *stash)
 {
 	size_t	i;
+	size_t	j;
 	char	*dest;
 
-	dest = NULL;
-	if (!stash && !dest)
+	if (!stash)
 		return (NULL);
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	dest = ft_calloc((ft_strlen(stash) + i + 1), sizeof(char));
-	while (stash[i] == '\n' && stash[i + 1] != '\n')
+	dest = ft_calloc((ft_strlen(stash) - i + 1), sizeof(char));
+	j = 0;
+	while (stash[i])
 	{
-		dest[i] = stash[i];
+		dest[j] = stash[i];
+		j++;
 		i++;
 	}
-	dest[i] = '\0';
+	dest[j] = '\0';
+	free (stash);
 	return (dest);
 }
 
@@ -78,28 +84,31 @@ char	*get_next_line(int fd)
 {
 	char		*line;
 	static char	*stash;
-	char		*temp;
 
-	temp = NULL;
 	stash = ft_read(fd, stash);
-	printf("stash->%s\n", stash);
-	line = get_line(temp, stash);
+	printf("read_stash->%s\n", stash);
+	line = get_line(stash);
 	printf("line->%s\n", line);
 	stash = ft_new(stash);
-	printf("stash->%s\n", stash);
-	return (stash);
+	printf("new_stash->%s\n", stash);
+	return (line);
 }
 
 int	main(void)
 {
 	int		fd;
 	char	*res;
+	int		i;
 
 	fd = open("file.txt", O_RDONLY);
-	res = get_next_line(fd);
-	printf("res->%s\n", res);
-	res = get_next_line(fd);
-	printf("res->%s\n", res);
+	i = 0;
+	while (i < BUFFER_SIZE)
+	{
+		res = get_next_line(fd);
+		printf("res1->%s\n", res);
+		i++;
+	}
+	close (fd);
 	return (0);
 }
 

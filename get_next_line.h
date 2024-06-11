@@ -31,6 +31,6 @@ char	*ft_strjoin_free(char *stash, char *buf);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_read(int fd, char *stash);
 char	*ft_new(char *stash);
-char	*get_line(char *dest, char *stash);
+char	*get_line(char *stash);
 
 #endif
