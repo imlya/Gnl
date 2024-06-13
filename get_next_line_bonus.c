@@ -6,7 +6,7 @@
 /*   By: imatek <imatek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:01:49 by imatek            #+#    #+#             */
-/*   Updated: 2024/06/13 21:07:14 by imatek           ###   ########.fr       */
+/*   Updated: 2024/06/13 22:27:52 by imatek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ char	*ft_read(int fd, char *stash)
 	int		nb_read;
 
 	nb_read = 1;
-	if (fd < 0 || BUFFER_SIZE == 0)
-		return (NULL);
 	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buf)
 		return (NULL);
@@ -34,6 +32,8 @@ char	*ft_read(int fd, char *stash)
 		}
 		buf[nb_read] = '\0';
 		stash = ft_strjoin_free(stash, buf);
+		if (!stash)
+			return (free(buf), NULL);
 	}
 	free (buf);
 	if (!nb_read && !stash[0])
@@ -78,7 +78,7 @@ char	*ft_new(char *stash)
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	dest = ft_calloc((ft_strlen(stash) - i + 2), sizeof(char));
+	dest = ft_calloc((ft_strlen(stash) - i + 1), sizeof(char));
 	if (!dest)
 		return (NULL);
 	if (stash[i])
@@ -99,6 +99,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*stash[1024];
 
+	if (fd < 0 || BUFFER_SIZE == 0)
+		return (NULL);
 	stash[fd] = ft_read(fd, stash[fd]);
 	if (!stash[fd])
 		return (NULL);
@@ -106,6 +108,7 @@ char	*get_next_line(int fd)
 	stash[fd] = ft_new(stash[fd]);
 	return (line);
 }
+
 // int	main(void)
 // {
 // 	int		fd1;
@@ -116,14 +119,14 @@ char	*get_next_line(int fd)
 
 // 	i = 1;
 // 	fd1 = open("read_error.txt", O_RDONLY);
-// 	fd2 = open("read_error.txt", O_RDONLY);
-// 	fd3 = open("read_error.txt", O_RDONLY);
-// 	res = get_next_line(fd);
+// 	fd2 = open("file.txt", O_RDONLY);
+// 	fd3 = open("only_nl.txt", O_RDONLY);
+// 	res = get_next_line(fd1);
 // 	//printf("line %d: %s\n", i++, res);
 // 	while (res)
 // 	{
 // 		free(res);
-// 		res = get_next_line(fd);
+// 		res = get_next_line(fd1);
 // 		//printf("line %d: %s\n", i, res);
 // 		i++;
 // 	}

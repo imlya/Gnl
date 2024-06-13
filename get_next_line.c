@@ -6,7 +6,7 @@
 /*   By: imatek <imatek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:50:58 by imatek            #+#    #+#             */
-/*   Updated: 2024/06/13 21:13:26 by imatek           ###   ########.fr       */
+/*   Updated: 2024/06/13 22:28:34 by imatek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ char	*ft_read(int fd, char *stash)
 	int		nb_read;
 
 	nb_read = 1;
-	if (fd < 0 || BUFFER_SIZE == 0)
-		return (NULL);
 	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buf)
 		return (NULL);
@@ -34,6 +32,8 @@ char	*ft_read(int fd, char *stash)
 		}
 		buf[nb_read] = '\0';
 		stash = ft_strjoin_free(stash, buf);
+		if (!stash)
+			return (free(buf), NULL);
 	}
 	free (buf);
 	if (!nb_read && !stash[0])
@@ -78,7 +78,7 @@ char	*ft_new(char *stash)
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	dest = ft_calloc((ft_strlen(stash) - i + 2), sizeof(char));
+	dest = ft_calloc((ft_strlen(stash) - i + 1), sizeof(char));
 	if (!dest)
 		return (NULL);
 	if (stash[i])
@@ -99,6 +99,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*stash;
 
+	if (fd < 0 || BUFFER_SIZE == 0)
+		return (NULL);
 	stash = ft_read(fd, stash);
 	if (!stash)
 		return (NULL);
@@ -107,26 +109,26 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
-{
-	int		fd;
-	char	*res;
-	int		i;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*res;
+// 	int		i;
 
-	i = 1;
-	fd = open("read_error.txt", O_RDONLY);
-	res = get_next_line(fd);
-	//printf("line %d: %s\n", i++, res);
-	while (res)
-	{
-		free(res);
-		res = get_next_line(fd);
-		//printf("line %d: %s\n", i, res);
-		i++;
-	}
-	free(res);
-	return (0);
-}
+// 	i = 1;
+// 	fd = open("read_error.txt", O_RDONLY);
+// 	res = get_next_line(fd);
+// 	printf("line %d: %s\n", i++, res);
+// 	while (res)
+// 	{
+// 		free(res);
+// 		res = get_next_line(fd);
+// 		printf("line %d: %s\n", i, res);
+// 		i++;
+// 	}
+// 	free(res);
+// 	return (0);
+// }
 
 // free stash end of file : eof => '\0'
 // if (ft_strchr(buf, '\n'))

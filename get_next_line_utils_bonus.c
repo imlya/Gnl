@@ -6,7 +6,7 @@
 /*   By: imatek <imatek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:01:41 by imatek            #+#    #+#             */
-/*   Updated: 2024/06/13 20:29:32 by imatek           ###   ########.fr       */
+/*   Updated: 2024/06/13 21:58:03 by imatek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ char	*ft_strjoin_free(char *stash, char *buf)
 	if (!stash)
 		len = ft_strlen(buf);
 	join = ft_calloc(len + 1, sizeof(char));
+	if (!join)
+		return (NULL);
 	while (stash && stash[++i])
 	{
 		join[j] = stash[i];
