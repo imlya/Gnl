@@ -50,8 +50,6 @@ char	*ft_strjoin_free(char *stash, char *buf)
 	i = -1;
 	j = 0;
 	len = ft_strlen(buf) + ft_strlen(stash);
-	if (!stash)
-		len = ft_strlen(buf);
 	join = ft_calloc(len + 1, sizeof(char));
 	if (!join)
 		return (NULL);

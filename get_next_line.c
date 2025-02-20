@@ -6,7 +6,7 @@
 /*   By: imatek <imatek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:50:58 by imatek            #+#    #+#             */
-/*   Updated: 2024/06/13 22:28:34 by imatek           ###   ########.fr       */
+/*   Updated: 2024/06/17 10:46:05 by imatek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,21 +129,3 @@ char	*get_next_line(int fd)
 // 	free(res);
 // 	return (0);
 // }
-
-// free stash end of file : eof => '\0'
-// if (ft_strchr(buf, '\n'))
-// 		break ;
-
-// nb_read = 0; si fin de fichier
-// nb_read != 0; en lecture
-
-// // 1/ read(fd, buf, buffer_size)
-// copy de buf dans stash 
-// 3/ check_newline
-// 4/ si buffer_size > \n 
-// 	afficher et clear jusqua \n 
-// 5/ si buffer_size < \n
-// 	join a chaque tour 
-// et revenir a 4
-// 6/ gerer si fin de fichier
-// 7/ size jusqua \n pour malloc

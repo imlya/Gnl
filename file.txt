@@ -1,5 +1,0 @@
-Ce projet va non seulement vous permettre
-d’ajouter une fonction très pratique à
-votre collection, mais également d’aborder 
-un nouvel élément surprenant de la program-
-mation en C : les variables statiques.

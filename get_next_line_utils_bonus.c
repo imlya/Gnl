@@ -6,7 +6,7 @@
 /*   By: imatek <imatek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:01:41 by imatek            #+#    #+#             */
-/*   Updated: 2024/06/13 21:58:03 by imatek           ###   ########.fr       */
+/*   Updated: 2024/06/17 10:40:47 by imatek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ char	*ft_strjoin_free(char *stash, char *buf)
 	i = -1;
 	j = 0;
 	len = ft_strlen(buf) + ft_strlen(stash);
-	if (!stash)
-		len = ft_strlen(buf);
 	join = ft_calloc(len + 1, sizeof(char));
 	if (!join)
 		return (NULL);
@@ -67,7 +65,7 @@ char	*ft_strjoin_free(char *stash, char *buf)
 		j++;
 	}
 	join[j] = '\0';
-	free (stash);
+	free(stash);
 	return (join);
 }
 
